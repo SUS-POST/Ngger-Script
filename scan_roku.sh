@@ -1,14 +1,13 @@
 #!/bin/sh
 
-# Obtiene la dirección IP local
-local_ip=$(ip addr | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | cut -d '/' -f 1)
-network="${local_ip%.*}.0/24"
+# Rango de IP de la red (ajusta según tu red)
+network="10.0.0"
 
-echo "Escaneando la red: $network"
+echo "Escaneando la red: ${network}.0/24"
 
 # Escanea la red
 for i in {1..254}; do
-    ip="${local_ip%.*}.$i"
+    ip="${network}.$i"
     if ping -c 1 -W 1 $ip > /dev/null; then
         echo "$ip está activo"
 
